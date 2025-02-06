@@ -1,0 +1,147 @@
+{% extends 'admin_mentor_app/fixed/base.html'  %}
+
+{% block content  %}
+{% load static %}
+
+
+<div class="row d-flex justify-contemt-center align-item-center">
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title">
+                            <h1>{{ completed }}</h1>
+                        </h5>
+                        <h5>Completed</h5>
+                    </div>
+                    <div class="col">
+                        <div class="icon-case">
+                            <img src="{% static 'admin_mentor_app/images/successful.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title">
+                            <h1>{{pending_count}}</h1>
+                        </h5>
+                        <h5>Pending</h5>
+                    </div>
+                    <div class="col">
+                        <div class="icon-case">
+                            <img src="{% static 'admin_mentor_app/images/work-time.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col">
+                        <h5 class="card-title">
+                            <h1>{{total_mentee_req}}</h1>
+                        </h5>
+                        <h5>Requests</h5>
+                    </div>
+                    <div class="col">
+                        <div class="icon-case">
+                            <img src="{% static 'admin_mentor_app/images/help-support.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="container mt-2">
+        <div class="row">
+            <div class="col-8">
+                <h4 class="">Top Progress of Mentees</h4 class="">
+                <div class="progress-table">
+                    <table class="table table-hover table-stripped table-responsive">
+                        <thead>
+                            <th>Email</th>
+                            <th>Name</th>
+                            <th>region of residence</th>
+                            <th>progress</th>
+                        </thead>
+                        <tbody>
+                            {% for progress in global_progress %}
+                                <tr>
+                                    <td>{{ progress.mentee.first_name }} {{ progress.mentee.last_name }}</td>
+                                    <td>{{ progress.mentor.first_name }} {{ progress.mentor.last_name }}</td>
+                                    <td>{{ progress.mentee.nationality }}</td>
+                                    <td>
+                                        <div class="progress" role="progressbar" aria-label="Basic example"
+                                            aria-valuenow="{{ progress.progress_percentage|default:0 }}" aria-valuemin="0" aria-valuemax="100">
+                                            <div class="progress-bar" style="width: {{ progress.progress_percentage|default:0 }}">
+                                                {{ progress.progress_percentage|default:0 }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        
+
+                    </table>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="containerf">
+                    <h4>Calendar</h4>
+                    <div>
+                        <iframe
+                            src="https://calendar.google.com/calendar/embed?height=310&wkst=1&ctz=UTC&bgcolor=%23ffffff&showPrint=0&showTz=0&showNav=0&showTitle=0&src=MzRkZTNlY2MyZmFkNjkzZWQ4ODI2MjJhNTg2YmNjZWRkN2RiM2RjZDhkMjI0NjBjOTI1MjcyYjQ5ZTgwZWYyZUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&src=ZW4udWcjaG9saWRheUBncm91cC52LmNhbGVuZGFyLmdvb2dsZS5jb20&color=%23F09300&color=%230B8043"
+                            style="border:solid 1px #777" width="350" height="270" frameborder="0"
+                            scrolling="no"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <h4>Upcoming Events</h4>
+                <div class="upcomingevents">
+                    <table class="table table-responsive table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Profile</th>
+                                <th>Name</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for schedule in schedules|slice:"0:5" %}
+                            <tr>
+                                <td><img src="{% static 'admin_mentor_app/images/user.png' %}" alt="" class="img-fluid rounded-circle"
+                                        style="max-width: 30px;"></td>
+                                <td>{{schedule.mentee.first_name}}</td>
+                                <td>20/07/2024</td>
+                            </tr>
+                            {% endfor %}
+                          
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content  %}
